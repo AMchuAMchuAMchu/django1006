@@ -56,21 +56,20 @@ def handle_form_index(request):
             return render(request,'error_index.html')
     return render(request,'error_index.html')
 
-# 用户的列表展示以及添加用户
+# 用户的列表展示以及添加用户http://127.0.0.1:8001/userInfoList/
 def userInfoList(request):
     countUIL = session_judge(request)
     if countUIL > 0:
+        # 去掉空格
+        username_userInfoList = str(request.POST.get('username_userInfoList')).strip()
+        password_userInfoList = str(request.POST.get('password_userInfoList')).strip()
         # 这里的话是必须需要四重判断才可以!!!!  != '' 且 != None
-        if request.POST.get('username_userInfoList') != '' and request.POST.get('password_userInfoList') != '' and request.POST.get('username_userInfoList') != None and request.POST.get('password_userInfoList') != None:
+        if username_userInfoList != '' and password_userInfoList != '' and username_userInfoList != None and password_userInfoList != None and username_userInfoList != 'None' and password_userInfoList != 'None':
         # index那边来的用户名和我们userInfoList添加的用不用的key名字即可区分....
-            username_userInfoList = request.POST.get('username_userInfoList')
-            password_userInfoList = request.POST.get('password_userInfoList')
-            print('>>>',username_userInfoList)
-            print('>>>',password_userInfoList)
             models.UserInfo.objects.create(username=username_userInfoList,password=password_userInfoList)
             user_list = list(models.UserInfo.objects.all())
             return render(request,'userInfoList.html',{'data':user_list})
         # 这里的话是第一次从handle_form_index路由过来的时候需要直接返回数据库已有的数据进行展示
         userList = list(models.UserInfo.objects.all())
-        return render(request, 'userInfoList.html', {'data': userList})
+        return render(request,'userInfoList.html', {'data': userList})
     return render(request,'error_index.html')
