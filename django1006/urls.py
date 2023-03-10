@@ -21,6 +21,9 @@ from mysite import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index),
-    path('handle_form_index/',views.handle_form_index),
+    # path('handle_form_index/',views.handle_form_index),
     path('userInfoList/',views.userInfoList),
+    path('userInfoList_delete/',views.userInfoList_delete),
+    path('userList/',views.userList),
+    path('my_error/',views.my_error),
 ]
